@@ -1,11 +1,11 @@
 <template>
-    <div id="app">
+    <div id="app" @click="promptFocus()">
         <div class="container">
             <div class="te_porter">
                 <span class="typed-text" v-html="typeValue"></span>
             </div>
             <!-- span class="cursor" :class="{'typing': typeStatus}">&nbsp;</span -->
-            <input id="prompt" v-model="promptStr" type="text" v-on:keyup.enter="tryc()" value="">
+            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" @keydown.tab.prevent="extendsc()" value="" autocomplete="off" autofocus>
         </div>
     </div>
 </template>
@@ -21,77 +21,295 @@ export default {
             typeStr:"",
             arrayTextos:[{
                 "presentacion":[
-                                "Raul Garcia Ameyugo",
-                                "",
-                                "Programador Web fullstack",
-                                "",
-                                "Para ver los detalles del curriculum escriba comandos tipo VER DATOS PERSONALES o VER EXPERIENCIA LABORAL.",
-                                "",
-                                "Escriba AYUDA para ver las diferentes opciones."
-                                ],
+                    "<h1>Raul Garcia Ameyugo</h1>",
+                    "<h2>Programador Web / Fullstack</h2>",
+                    "Para ver los detalles del curriculum escriba comandos tipo VER DATOS PERSONALES o VER EXPERIENCIA.",
+                    "Escriba AYUDA para ver las diferentes opciones.",
+                    "Escriba IMPRIMIR para ver el curriculum en formato pdf.",
+                    ""
+                ],
                 "ayuda":[
-                        "limpiar -> Limpia la pantalla",
-                        "ver ->  Para ver al detalle una parte o todo el curriculum. "
+                    "VER -> Para ver al detalle una parte o todo el curriculum. VER + [TAB] para mas opciones.",
+                    "IMPRIMIR -> Imprime/Descarga version en pdf.",
+                    "LIMPIAR -> Limpia la pantalla.",
+                    ""
+                ],
+                "ver":[{
+                    "experiencia":[
+                        "SDP Ibérica, Barcelona/Sint-Niklaas (BE) — Técnico de sistemas informáticos<br />SEPTIEMBRE 2004 - ABRIL 2007<br />- Instalación y mantenimiento de sistemas informáticos para la gestión de diferentes software desarrollados por la empresa. Periodo trabajado en el extranjero, entre Bélgica y Francia.",
+                        "",
+                        "Compuspar, Barcelona — Administrador de sistemas informáticos<br />MAYO 2007 - ENERO 2008<br />- Gestión de los sistemas informáticos y redes telemáticas. Mantenimiento de servidores basados en Microsoft y Linux y configuración de redes y accesos remotos.",
+                        "",
+                        "Freelance/autonomo, Barcelona — Desarrollador web<br />ENERO 2008 - ENERO 2013<br />- Etapa rica en experiencia y aprendizaje. Formé parte de todo tipo de proyectos y desarrollé desde landing pages hasta gestores propios de contenido. Me gusta hacer hincaié en las colaboraciones con empresas dedicadas al social media. Normalmente desarrollo de herramientas para seguimiento de redes sociales.",
+                        "",
+                        "Educacionline, Barcelona — Desarrollador web<br />ENERO 2013 - AGOSTO 2013<br />- Colaboración con la empresa para la creación de un sistema de multi blogging enfocado a promocionar sus diferentes cursos. Wordpress, fullstack.",
+                        "",
+                        "Rosa del Vents, Barcelona — Desarrollador web<br />AGOSTO 2013 - JULIO 2015<br />- Mantenimiento del ecosistema web de los diferentes departamentos del grupo RV. Mantenimiento completo y creación de utilidades según las necesidades. Full-stack y gestores de contenidos.",
+                        "",
+                        "NeXTreT, Barcelona — Desarrollador front-end<br />JULIO 2015 - SEPTIEMBRE 2018<br />- CCMA/TV3, mantenimiento y desarrollo en el ecosistema ccma.cat. Fullstack con tendencia a front-end<br />- Ticketmaster, mantenimiento de sistema de compra de entradas y abonos realizada con tecnología front-end.",
+                        "",
+                        "DuplexMarketing, Barcelona — Desarrollador full-stack<br />SEPTIEMBRE 2018 - FEBRERO 2019<br />- Desarrollo full-stack en una empresa de marketing. Mayoritariamente promociones basadas en un sistema web con codeigniter.",
+                        "",
+                        "Gemweb, Barcelona — Desarrollador full-stack/backend<br />FEBRERO 2019 - ACTUALIDAD<br />- Desarrollo full-stack, pero sobre todo backend sobre una aplicacion de gestion energetica. Mantenimiento y nuevos desarrollos.",
+                        ""
+                    ],
+                    "idiomas":[
+                        "Francés. Competencia bilingüe o nativa.",
+                        "Inglés. Competencia profesional completa.",
+                        "Catalán. Competencia profesional completa.",
+                        ""
+                    ],
+                    "tecnologias":[
+                        "Javascript, jQuery, Backbone.js, Vue.js.",
+                        "PHP, MySQL/SQL, XML, JSON",
+                        "Codeigniter, Laravel",
+                        "Wordpress, Joomla",
+                        "Responsive Web Design",
+                        "Automatización de tareas.",
+                        "Versionado con repositorios SVN y Git",
+                        "Desarrollo de tests (unitarios y funcionales)",
+                        ""
+                    ],
+                    "datos":[{
+                        "personales":[
+                            "Raul Garcia Ameyugo",
+                            "08026 Barcelona (BARCELONA)",
+                            "(34) 653 73 76 78","ranet101@gmail.com"],
+                        "academicos":[
+                            "Estudios cursados en Francia<br />Equivalente BUP y COU",
+                            "1992, HENDAYA (FR)",
+                            "",
+                            "Centro de formación profesional Bidasoa, Irún",
+                            "Formación profesional de grado superior - Electricidad y Electrónica",
+                            "1992 - 1997, IRÚN",
+                            "",
+                            "Cebanc CDEA, Donosti, San Sebastián",
+                            "Ciclo formativo de grado superior, Informática, programación y administración de sistemas informáticos.",
+                            "1998 - 2000, DONOSTI, SAN SEBASTIÁN",
+                            "",
+                            "Centro BIT, Barcelona",
+                            "Master - Webmaster",
+                            "2001 - 2002, BARCELONA",
+                            "",
+                        ],
+                        "interes":[
+                            "Carnet de conducir B",
+                            "Idiomas:",
+                            "Francés. Competencia bilingüe o nativa.",
+                            "Inglés. Competencia profesional completa.",
+                            "Catalán. Competencia profesional completa.",
+                            ""
                         ]
+                    }]
+                }]
             }],
-            typingSpeed: 45,
+            commands:[{
+                "limpiar":{},
+                "ayuda":{},
+                "imprimir":{},
+                "ver":[{
+                    "datos":[{
+                        "personales":{},
+                        "academicos":{},
+                        "interes":{}
+                    }],
+                    "experiencia":[],
+                    "idiomas":[],
+                    "tecnologias":[]
+                }]
+            }],
+            typingSpeed: 5,
             erasingSpeed: 100,
             charIndex: 0,
             promptStr:"",
-            allowedComands:["limpiar"]
+            command:"",
+            param1:"",
+            param2:"",
+            level:""
         }
     },
     methods: {
-        typeText() {
+        waitForPrint(str){
+            var that = this;
+            var intervalo = setInterval(function () {
+                if(!that.typeStatus){
+                    that.typeStr = str;
+                    that.printFromString();
+                    clearInterval(intervalo);
+                }
+            }, 100);
+        },
+        printFromString() {
             if(this.charIndex < this.typeStr.length) {
                 this.typeValue += this.typeStr.charAt(this.charIndex);
                 this.charIndex += 1;
                 this.typeStatus = true;
-                setTimeout(this.typeText, this.typingSpeed);
+                setTimeout(this.printFromString, this.typingSpeed);
             }else{
                 this.typeValue += "<br />";
+                this.typeValue += " ";
                 this.charIndex = 0;
                 this.typeStatus = false;
             }
         },
-        eraseText() {
-            if(this.charIndex > 0) {
-                if(!this.typeStatus)
-                    this.typeStatus = true;
-                this.typeValue = this.typeArray[this.typeArrayIndex].substring(0, this.charIndex - 1);
-                this.charIndex -= 1;
-                setTimeout(this.eraseText, this.erasingSpeed);
-            } else {
-                this.typeStatus = false;
-                this.typeArrayIndex += 1;
-                if(this.typeArrayIndex >= this.typeArray.length)
-                this.typeArrayIndex = 0;
-                setTimeout(this.typeText, this.typingSpeed + 1000);
+        printFromArray(array){
+            let that = this;
+            array.forEach(function (d, i) {
+                that.waitForPrint(d);
+            });
+        },
+        launchCommand(){
+            let splited = this.promptStr.split(" ");
+            this.command = splited[0];
+            this.level = 1;
+            if(typeof splited[1]!="undefined"){
+                this.param1 = splited[1];
+                this.level = 2;
+            }
+            if(typeof splited[2]!="undefined"){
+                this.param2 = splited[2];
+                this.level = 3;
+            }
+            this.typeValue+="<br />";
+            for(var i=1;i<=this.level;i++){
+                if(!this.checkCommand(i)){
+                    this.printErrors(i);
+                    this.typeValue+="Use uno de los siguientes comandos:";
+                    this.printOptions(i);
+                    this.resetPrompt();
+                    return;
+                }
+            }
+            this.printCommand();
+            switch(this.command){
+                case "limpiar":
+                    this.limpiar();
+                    break;
+                case "ayuda":
+                    this.ayuda();
+                    break;
+                case "imprimir":
+                    this.imprimir();
+                    break;
+                case "ver":
+                    this.ver();
+                    break;
+            }
+            this.resetPrompt();
+        },
+        checkCommand(level){
+            let element;
+            switch(level){
+                case 1:
+                    element = this.commands[0][this.command];
+                    break;
+                case 2:
+                    element = this.commands[0][this.command][0][this.param1];
+                    break;
+                case 3:
+                    element = this.commands[0][this.command][0][this.param1][0][this.param2];
+                    break;
+            }
+            if(typeof element==="undefined"){
+                return false;
+            }else{
+                return true;
             }
         },
-        tryc(){
-            console.log(this.promptStr);
+        printCommand(){
+            let str;
+            switch(this.level){
+                case 1:
+                    str="Comando: <i>"+this.command.toUpperCase()+"</i>";
+                    break;
+                case 2:
+                    str="Comando <i>"+this.command.toUpperCase()+" "+this.param1.toUpperCase()+"</i>.";
+                    break;
+                case 3:
+                    str="Comando <i>"+this.command.toUpperCase()+"  "+this.param1.toUpperCase()+" "+this.param2.toUpperCase()+"</i>.";
+                    break;
+            }
+            this.typeValue+=str+"<br/>";
+        },
+        printErrors(errorOn){
+            let str;
+            switch(errorOn){
+                case 1:
+                    str="<span style='color:red'>Error:</span> comando <span style='color:red'><i>"+this.command.toUpperCase()+"</i></span> no encontrado.";
+                    break;
+                case 2:
+                    str="<span style='color:red'>Error:</span> comando "+this.command.toUpperCase()+" <span style='color:red'><i>"+this.param1.toUpperCase()+"</i></span> no encontrado.";
+                    break;
+                case 3:
+                    str="<span style='color:red'>Error:</span> comando "+this.command.toUpperCase()+"  "+this.param1.toUpperCase()+" <span style='color:red'><i>"+this.param2.toUpperCase()+"</i></span> no encontrado.";
+                    break;
+            }
+            this.typeValue+=str+"<br />";
+        },
+        printOptions(level){
+            let options;
+            switch(level){
+                case 1:
+                    options= this.commands[0];
+                    break;
+                case 2:
+                    options= this.commands[0][this.command][0];
+                    break;
+                case 3:
+                    options= this.commands[0][this.command][0][this.param1][0];
+                    break;
+            }
+            for (var option in options){
+                this.waitForPrint(option.toUpperCase());
+            }
+        },
+        promptFocus(){
+            document.getElementById("prompt").focus();
+        },
+        resetPrompt(){
+            this.typeValue+="<br />";
+            this.promptFocus();
+            this.promptStr = "";
+        },
+        extendsc(){
+            console.log("Cuando se pulsa tab, para añadir extensiones de comando");
+            console.log("Primero validar si el comando tiene extension");
+        },
+        limpiar(){
+            this.typeValue="";
+        },
+        ayuda(){
+            this.printFromArray(this.arrayTextos[0]["ayuda"]);
+        },
+        imprimir(){
+            window.open('Curriculum_vitae_Raul_Garcia.pdf','_target');
+        },
+        ver(){
+            if(this.level < 2){
+                this.waitForPrint("El comando VER no puede usarse solo. Pruebe VER con:");
+                this.printOptions(2);
+                return;
+            }else if(this.level==2 && this.param1=="datos"){
+                this.waitForPrint("El comando VER DATOS no puede usarse solo. Pruebe VER DATOS con:");
+                this.printOptions(3);
+                return;
+            }
+            if(this.level==2){
+                this.printFromArray(this.arrayTextos[0][this.command][0][this.param1]);
+            }else if(this.level==3){
+                this.printFromArray(this.arrayTextos[0][this.command][0][this.param1][0][this.param2]);
+            }
         }
     },
     watch:{
-      typeValue: function () {
-          if(!this.typeStatus){
-              document.getElementById("prompt").focus();
-          }
-      }
+        typeValue: function () {
+            if(!this.typeStatus){
+                this.promptFocus();
+            }
+        }
     },
     created() {
-        let presentacion = this.arrayTextos[0]["presentacion"];
-        let that = this;
-        presentacion.forEach(function (d, i) {
-            var myVar = setInterval(function () {
-                if(!that.typeStatus){
-                    that.typeStr = d;
-                    that.typeText();
-                    clearInterval(myVar)
-                }
-            }, 100);
-        });
+        //  this.printFromArray(this.arrayTextos[0]["presentacion"]);
     }
 }
 </script>
@@ -144,7 +362,7 @@ export default {
     }
 
     span{
-        line-height: 150%;
+        line-height: 175%;
         &.cursor {
             display: inline-block;
             width: 4px;

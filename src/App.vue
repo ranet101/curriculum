@@ -29,7 +29,7 @@ export default {
                     ""
                 ],
                 "ayuda":[
-                    "VER -> Para ver al detalle una parte o todo el curriculum. VER + [TAB] para mas opciones.",
+                    "VER -> Para ver al detalle una parte o todo el curriculum.",
                     "IMPRIMIR -> Imprime/Descarga version en pdf.",
                     "LIMPIAR -> Limpia la pantalla.",
                     ""

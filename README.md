@@ -6,7 +6,13 @@ Curriculum Vitae
 [View online](http://raul.garcia.ameyugo.eu/)
 
 
-## Project setup
+## Options
+VER -> Show curriculum detail,
+IMPRIMIR -> Print/download pdf version.,
+LIMPIAR -> Clean screen,
+
+
+### Project setup
 npm install
 
 ### Compiles and minifies for production

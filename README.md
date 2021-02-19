@@ -7,9 +7,11 @@ Curriculum Vitae
 
 
 ## Options
-VER -> Show curriculum detail,
-IMPRIMIR -> Print/download pdf version.,
-LIMPIAR -> Clean screen,
+VER: Show curriculum detail,
+IMPRIMIR: Print/download pdf version.,
+LIMPIAR: Clean screen,
++/-: up/down typing speed
+
 
 
 ### Project setup

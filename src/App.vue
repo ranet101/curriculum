@@ -29,9 +29,10 @@ export default {
                     ""
                 ],
                 "ayuda":[
-                    "VER -> Para ver al detalle una parte o todo el curriculum.",
-                    "IMPRIMIR -> Imprime/Descarga version en pdf.",
-                    "LIMPIAR -> Limpia la pantalla.",
+                    "VER: Para ver al detalle una parte o todo el curriculum.",
+                    "IMPRIMIR: Imprime/Descarga version en pdf.",
+                    "LIMPIAR: Limpia la pantalla.",
+                    "+/-: Sube baja la velocidad de escritura.",
                     ""
                 ],
                 "ver":[{
@@ -116,7 +117,9 @@ export default {
                     "experiencia":[],
                     "idiomas":[],
                     "tecnologias":[]
-                }]
+                }],
+                "+":{},
+                "-":{}
             }],
             typingSpeed: 5,
             erasingSpeed: 100,
@@ -193,6 +196,12 @@ export default {
                     break;
                 case "ver":
                     this.ver();
+                    break;
+                case "+":
+                    this.subirVelocidad();
+                    break;
+                case "-":
+                    this.bajaVelocidad();
                     break;
             }
             this.resetPrompt();
@@ -295,6 +304,20 @@ export default {
             }else if(this.level==3){
                 this.printFromArray(this.arrayTextos[0][this.command][0][this.param1][0][this.param2]);
             }
+        },
+        subirVelocidad(){
+            this.typingSpeed+=5;
+            this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed);
+        },
+        bajaVelocidad(){
+            if(this.typingSpeed>=10){
+                this.typingSpeed-=5;
+                this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed);
+            }else{
+                this.typingSpeed=5;
+                this.waitForPrint("Velocidad de printado minima alcanzada: "+this.typingSpeed);
+            }
+
         }
     },
     watch:{

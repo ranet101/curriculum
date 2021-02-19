@@ -5,7 +5,7 @@
                 <span class="typed-text" v-html="typeValue"></span>
             </div>
             <!-- span class="cursor" :class="{'typing': typeStatus}">&nbsp;</span -->
-            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" @keydown.tab.prevent="extendsc()" value="" autocomplete="off" autofocus>
+            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" value="" autocomplete="off" autofocus>
         </div>
     </div>
 </template>
@@ -271,10 +271,6 @@ export default {
             this.promptFocus();
             this.promptStr = "";
         },
-        extendsc(){
-            console.log("Cuando se pulsa tab, para añadir extensiones de comando");
-            console.log("Primero validar si el comando tiene extension");
-        },
         limpiar(){
             this.typeValue="";
         },
@@ -295,7 +291,7 @@ export default {
                 return;
             }
             if(this.level==2){
-                this.printFromArray(this.arrayTextos[0][this.command][0][this.param1]);
+                this.printFromArray(this.arrayTextos[0][this.command][0][thisºº.param1]);
             }else if(this.level==3){
                 this.printFromArray(this.arrayTextos[0][this.command][0][this.param1][0][this.param2]);
             }
@@ -309,7 +305,7 @@ export default {
         }
     },
     created() {
-        //  this.printFromArray(this.arrayTextos[0]["presentacion"]);
+        this.printFromArray(this.arrayTextos[0]["presentacion"]);
     }
 }
 </script>

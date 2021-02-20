@@ -32,7 +32,7 @@ export default {
                     "VER: Para ver al detalle una parte o todo el curriculum.",
                     "IMPRIMIR: Imprime/Descarga version en pdf.",
                     "LIMPIAR: Limpia la pantalla.",
-                    "+/-: Sube baja la velocidad de escritura.",
+                    "-/+: Sube baja la velocidad de escritura.",
                     ""
                 ],
                 "ver":[{
@@ -307,15 +307,15 @@ export default {
         },
         subirVelocidad(){
             this.typingSpeed+=5;
-            this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed);
+            this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed+" ms");
         },
         bajaVelocidad(){
             if(this.typingSpeed>=10){
                 this.typingSpeed-=5;
-                this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed);
+                this.waitForPrint("Velocidad de printado actual: "+this.typingSpeed+" ms");
             }else{
                 this.typingSpeed=5;
-                this.waitForPrint("Velocidad de printado minima alcanzada: "+this.typingSpeed);
+                this.waitForPrint("Velocidad de printado minima alcanzada: "+this.typingSpeed+" ms");
             }
 
         }

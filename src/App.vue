@@ -1,5 +1,5 @@
 <template>
-    <div id="app" @click="promptFocus()">
+    <div id="app" @click="promptFocus()" class="default">
         <div class="container">
             <div class="te_porter">
                 <span class="typed-text" v-html="typeValue"></span>
@@ -32,6 +32,7 @@ export default {
                     "VER: Para ver al detalle una parte o todo el curriculum.",
                     "IMPRIMIR: Imprime/Descarga version en pdf.",
                     "LIMPIAR: Limpia la pantalla.",
+                    "TRANSFORMA: Cambia el estilo del terminal",
                     "-/+: Sube baja la velocidad de escritura.",
                     ""
                 ],
@@ -108,6 +109,7 @@ export default {
                 "limpiar":{},
                 "ayuda":{},
                 "imprimir":{},
+                "transforma":{},
                 "ver":[{
                     "datos":[{
                         "personales":{},
@@ -184,26 +186,7 @@ export default {
                 }
             }
             this.printCommand();
-            switch(this.command){
-                case "limpiar":
-                    this.limpiar();
-                    break;
-                case "ayuda":
-                    this.ayuda();
-                    break;
-                case "imprimir":
-                    this.imprimir();
-                    break;
-                case "ver":
-                    this.ver();
-                    break;
-                case "+":
-                    this.subirVelocidad();
-                    break;
-                case "-":
-                    this.bajaVelocidad();
-                    break;
-            }
+            this.launchAction();
             this.resetPrompt();
         },
         checkCommand(level){
@@ -280,6 +263,31 @@ export default {
             this.promptFocus();
             this.promptStr = "";
         },
+        launchAction(){
+            switch(this.command){
+                case "limpiar":
+                    this.limpiar();
+                    break;
+                case "ayuda":
+                    this.ayuda();
+                    break;
+                case "imprimir":
+                    this.imprimir();
+                    break;
+                case "ver":
+                    this.ver();
+                    break;
+                case "+":
+                    this.subirVelocidad();
+                    break;
+                case "-":
+                    this.bajaVelocidad();
+                    break;
+                case "transforma":
+                    this.transforma();
+                    break;
+            }
+        },
         limpiar(){
             this.typeValue="";
         },
@@ -317,7 +325,24 @@ export default {
                 this.typingSpeed=5;
                 this.waitForPrint("Velocidad de printado minima alcanzada: "+this.typingSpeed+" ms");
             }
-
+        },
+        transforma(){
+            let old_class = document.getElementById('app').className, new_class;
+            console.log(old_class);
+            switch (old_class) {
+                case "default":
+                    new_class = "style2";
+                    break;
+                case "style2":
+                    new_class = "style3";
+                    break;
+                default:
+                    new_class = "default";
+                    break;
+            }
+            document.getElementById('app').className = '';
+            document.getElementById("app").classList.add(new_class);
+            this.waitForPrint("Estilo aplicado: "+new_class);
         }
     },
     watch:{
@@ -335,6 +360,8 @@ export default {
 
 <style lang="scss">//
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
     body {
         margin: 0;
@@ -343,53 +370,70 @@ export default {
     }
 
     #app {
-        font-family: 'Press Start 2P', cursive;
         font-size:10px;
-        color: #fff;
-        background-color: #241E17;
         width: 100%;
         min-height: 100vh;
-    }
-
-    .te_porter{
-        width: 100%;
-        position: fixed;
-        bottom: 35px;
-    }
-
-    input#prompt{
-        padding:0 0 10px 0;
-        font-family: 'Press Start 2P', cursive;
-        font-size:10px;
-        background-color: #241E17;
-        border: none;
-        color: #fff;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 15px;
-        &:focus{
-            outline:none;
+        &.default{
+            font-family: 'Press Start 2P', cursive;
+            color: #fff;
+            font-size:10px;
+            background-color: #241E17;
+            input#prompt{
+                font-family: 'Press Start 2P', cursive;
+                color: #fff;
+                font-size:10px;
+                background-color: #241E17;
+            }
+            span{
+                line-height: 175%;
+            }
         }
-    }
-
-
-    .container {
-        position: absolute;
-        bottom: 0;
-        padding: 10px
-    }
-
-    span{
-        line-height: 175%;
-        &.cursor {
-            display: inline-block;
-            width: 4px;
-            background-color: #fff;
-            animation: cursorBlink 1s infinite;
+        &.style2{
+            font-family: 'VT323', monospace;
+            color: #ffB000;
+            font-size:18px;
+            background-color: #000;
+            input#prompt{
+                font-family: 'VT323', monospace;
+                color: #ffB000;
+                font-size:18px;
+                background-color: #000;
+            }
         }
-        &.cursor.typing {
-            animation: none;
+        &.style3{
+            font-family: 'Inconsolata', monospace;
+            color: #00FF66;
+            background-color: #000;
+            font-size:14px;
+            input#prompt{
+                font-family: 'Inconsolata', monospace;
+                color: #00FF66;
+                background-color: #000;
+                font-size:14px;
+            }
+        }
+
+        .container {
+            position: absolute;
+            bottom: 0;
+            padding: 10px;
+            .te_porter{
+                width: 100%;
+                position: fixed;
+                bottom: 35px;
+            }
+        }
+
+        input#prompt{
+            padding:0 0 10px 0;
+            border: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 15px;
+            &:focus{
+                outline:none;
+            }
         }
     }
 

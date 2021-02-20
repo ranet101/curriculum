@@ -164,6 +164,8 @@ export default {
             });
         },
         launchCommand(){
+            if(this.typeStatus || this.promptStr=="")
+                return;
             let splited = this.promptStr.split(" ");
             this.command = splited[0].toLowerCase();
             this.level = 1;
@@ -299,11 +301,13 @@ export default {
         },
         ver(){
             if(this.level < 2){
-                this.waitForPrint("El comando VER no puede usarse solo. Pruebe VER con:");
+                this.waitForPrint("El comando VER no puede usarse solo.");
+                this.waitForPrint("Pruebe VER con:");
                 this.printOptions(2);
                 return;
             }else if(this.level==2 && this.param1=="datos"){
-                this.waitForPrint("El comando VER DATOS no puede usarse solo. Pruebe VER DATOS con:");
+                this.waitForPrint("El comando VER DATOS no puede usarse solo.");
+                this.waitForPrint("Pruebe VER DATOS con:");
                 this.printOptions(3);
                 return;
             }
@@ -343,7 +347,7 @@ export default {
             document.getElementById('app').className = '';
             document.getElementById("app").classList.add(new_class);
             this.waitForPrint("Estilo aplicado: "+new_class);
-        }
+        },
     },
     watch:{
         typeValue: function () {
@@ -362,13 +366,11 @@ export default {
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
     body {
         margin: 0;
         bottom: 0;
         padding: 0;
     }
-
     #app {
         font-size:10px;
         width: 100%;
@@ -412,7 +414,6 @@ export default {
                 font-size:14px;
             }
         }
-
         .container {
             position: absolute;
             bottom: 0;
@@ -423,7 +424,6 @@ export default {
                 bottom: 35px;
             }
         }
-
         input#prompt{
             padding:0 0 10px 0;
             border: none;
@@ -435,11 +435,5 @@ export default {
                 outline:none;
             }
         }
-    }
-
-    @keyframes cursorBlink {
-        49% { background-color: #fff; }
-        50% { background-color: transparent; }
-        99% { background-color: transparent; }
     }
 </style>

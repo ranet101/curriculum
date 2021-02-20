@@ -119,7 +119,7 @@ export default {
                     "tecnologias":[]
                 }],
                 "+":{},
-                "-":{}
+                "-":{},
             }],
             typingSpeed: 5,
             erasingSpeed: 100,
@@ -163,14 +163,14 @@ export default {
         },
         launchCommand(){
             let splited = this.promptStr.split(" ");
-            this.command = splited[0];
+            this.command = splited[0].toLowerCase();
             this.level = 1;
             if(typeof splited[1]!="undefined"){
-                this.param1 = splited[1];
+                this.param1 = splited[1].toLowerCase();
                 this.level = 2;
             }
             if(typeof splited[2]!="undefined"){
-                this.param2 = splited[2];
+                this.param2 = splited[2].toLowerCase();
                 this.level = 3;
             }
             this.typeValue+="<br />";

@@ -308,7 +308,7 @@ export default {
                 return;
             }
             if(this.level==2){
-                this.printFromArray(this.arrayTextos[0][this.command][0][thisºº.param1]);
+                this.printFromArray(this.arrayTextos[0][this.command][0][this.param1]);
             }else if(this.level==3){
                 this.printFromArray(this.arrayTextos[0][this.command][0][this.param1][0][this.param2]);
             }

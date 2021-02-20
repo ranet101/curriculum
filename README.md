@@ -7,11 +7,11 @@ Curriculum Vitae
 
 
 ## Options
-VER: Show curriculum detail,
-IMPRIMIR: Print/download pdf version.,
-LIMPIAR: Clean screen,
-"TRANSFORMA: Cambia el estilo del terminal",
-+/-: up/down typing speed
+- VER: Show curriculum detail,
+- IMPRIMIR: Print/download pdf version.,
+- LIMPIAR: Clean screen,
+- "TRANSFORMA: Cambia el estilo del terminal",
+- +/-: up/down typing speed
 
 
 

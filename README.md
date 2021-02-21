@@ -10,7 +10,7 @@ Curriculum Vitae
 - VER: Show curriculum detail,
 - IMPRIMIR: Print/download pdf version.,
 - LIMPIAR: Clean screen,
-- "TRANSFORMA: Cambia el estilo del terminal",
+- TRANSFORMA: Cambia el estilo del terminal,
 - +/-: up/down typing speed
 
 

@@ -33,6 +33,7 @@ export default {
                     "IMPRIMIR: Imprime/Descarga version en pdf.",
                     "LIMPIAR: Limpia la pantalla.",
                     "TRANSFORMA: Cambia el estilo del terminal",
+                    //  "COMPARTE: Comparte en redes sociales",
                     "-/+: Sube baja la velocidad de escritura.",
                     ""
                 ],
@@ -110,6 +111,11 @@ export default {
                 "ayuda":{},
                 "imprimir":{},
                 "transforma":{},
+                "comparte":[{
+                    "facebook":{},
+                    "twiter":{},
+                    "linkedin":{},
+                }],
                 "ver":[{
                     "datos":[{
                         "personales":{},
@@ -287,6 +293,9 @@ export default {
                     break;
                 case "transforma":
                     this.transforma();
+                    break;
+                case "comparte":
+                    this.comparte();
                     break;
             }
         },

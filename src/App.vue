@@ -5,7 +5,7 @@
                 <span class="typed-text" v-html="typeValue"></span>
             </div>
             <!-- span class="cursor" :class="{'typing': typeStatus}">&nbsp;</span -->
-            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" value="" autocomplete="off" autofocus>
+            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" @keyup.ctrl.67="stopPrinting()" value="" autocomplete="off" autofocus>
         </div>
     </div>
 </template>
@@ -26,6 +26,7 @@ export default {
                     "Para ver los detalles del curriculum escriba comandos tipo VER DATOS PERSONALES o VER EXPERIENCIA.",
                     "Escriba AYUDA para ver las diferentes opciones.",
                     "Escriba IMPRIMIR para ver el curriculum en formato pdf.",
+                    "CTRL + C para detener la ejecucion del ultimo comando.",
                     ""
                 ],
                 "ayuda":[
@@ -35,7 +36,7 @@ export default {
                     "TRANSFORMA: Cambia el estilo del terminal",
                     //  "COMPARTE: Comparte en redes sociales",
                     "-/+: Sube baja la velocidad de escritura.",
-                    ""
+                    "CTRL+C: Inetrrumpir printado."
                 ],
                 "ver":[{
                     "experiencia":[
@@ -196,6 +197,17 @@ export default {
             this.printCommand();
             this.launchAction();
             this.resetPrompt();
+        },
+        stopPrinting(){
+            if(this.typeStatus){
+                var highestTimeoutId = setTimeout(";");
+                for (var i = 0 ; i < highestTimeoutId ; i++) {
+                    clearTimeout(i);
+                }
+                this.charIndex = 0;
+                this.typeStatus = false;
+                this.typeValue+= "<br /><br /><span style='color:red'>Printado detenido por el usuario CTRL+C.</span>";
+            }
         },
         checkCommand(level){
             let element;

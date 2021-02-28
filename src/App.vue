@@ -358,7 +358,6 @@ export default {
         },
         transforma(){
             let old_class = document.getElementById('app').className, new_class;
-            console.log(old_class);
             switch (old_class) {
                 case "default":
                     new_class = "style2";
@@ -370,6 +369,7 @@ export default {
                     new_class = "default";
                     break;
             }
+            this.$cookies.set("theme",new_class);
             document.getElementById('app').className = '';
             document.getElementById("app").classList.add(new_class);
             this.waitForPrint("Estilo aplicado: "+new_class);

@@ -9,8 +9,9 @@ Curriculum Vitae
 ## Options
 - VER: Show curriculum detail.
 - IMPRIMIR: Print/download pdf version.
-- LIMPIAR: Clean screen.
 - TRANSFORMA: Change terminal style.
+- LIMPIAR: Clean screen.
+- RESET: Reboot app.
 - +/-: up/down typing speed.
 - CTRL+C: Stop printing.
 

@@ -32,8 +32,9 @@ export default {
                 "ayuda":[
                     "VER: Para ver al detalle una parte o todo el curriculum.",
                     "IMPRIMIR: Imprime/Descarga version en pdf.",
-                    "LIMPIAR: Limpia la pantalla.",
                     "TRANSFORMA: Cambia el estilo del terminal",
+                    "LIMPIAR: Limpia la pantalla.",
+                    "RESET: Reinicia la aplicacion",
                     //  "COMPARTE: Comparte en redes sociales",
                     "-/+: Sube baja la velocidad de escritura.",
                     "CTRL+C: Inetrrumpir printado."
@@ -129,6 +130,7 @@ export default {
                 }],
                 "+":{},
                 "-":{},
+                "reset":{},
             }],
             typingSpeed: 5,
             erasingSpeed: 100,
@@ -309,6 +311,9 @@ export default {
                 case "comparte":
                     this.comparte();
                     break;
+                case "reset":
+                    this.reset();
+                    break;
             }
         },
         limpiar(){
@@ -369,6 +374,10 @@ export default {
             document.getElementById("app").classList.add(new_class);
             this.waitForPrint("Estilo aplicado: "+new_class);
         },
+        reset(){
+            this.limpiar();
+            this.printFromArray(this.arrayTextos[0]["presentacion"]);
+        }
     },
     watch:{
         typeValue: function () {

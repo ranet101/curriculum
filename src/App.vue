@@ -5,7 +5,13 @@
                 <span class="typed-text" v-html="typeValue"></span>
             </div>
             <!-- span class="cursor" :class="{'typing': typeStatus}">&nbsp;</span -->
-            <input id="prompt" v-model="promptStr" type="text" @keyup.enter="launchCommand()" @keyup.ctrl.67="stopPrinting()" value="" autocomplete="off" autofocus>
+            <input
+                id="prompt"
+                v-model="promptStr"
+                type="text"
+                @keyup.enter="launchCommand()"
+                @keyup.ctrl.67="stopPrinting()"
+                value="" autocomplete="off" autofocus>
         </div>
     </div>
 </template>
@@ -377,7 +383,7 @@ export default {
         reset(){
             this.limpiar();
             this.printFromArray(this.arrayTextos[0]["presentacion"]);
-        }
+        },
     },
     watch:{
         typeValue: function () {
@@ -387,6 +393,12 @@ export default {
         }
     },
     created() {
+    },
+    mounted() {
+        if(this.$cookies.isKey("theme")){
+            document.getElementById('app').className = '';
+            document.getElementById("app").classList.add(this.$cookies.get("theme"));
+        }
         this.printFromArray(this.arrayTextos[0]["presentacion"]);
     }
 }
